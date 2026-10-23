@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Tetris: Spatial Stack Simulator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+</head>
+<body>
+  <video id="webcam" autoplay playsinline muted></video>
+  <canvas id="cameraCanvas"></canvas>
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="introScreen" class="visible" aria-live="polite">
+    <canvas id="introCanvas"></canvas>
+    <div class="intro-content">
+      <h1 class="intro-title">AR TETRIS</h1>
+      <p class="intro-subtitle">Spatial Stack Simulator</p>
+
+      <div class="highest-score-block">
+        <div class="label">HIGHEST SCORE</div>
+        <div id="introHighScoreValue" class="intro-high-score">0</div>
+      </div>
+
+      <button id="startGameButton" class="start-btn" type="button">&#9654; START GAME</button>
+
+      <div id="introFinalScore" class="intro-final-score hidden"></div>
+      <div id="introMessage" class="intro-message">PINCH to grab, drag to aim, release to drop.</div>
+      <ul id="introInstructions" class="intro-instructions" aria-label="Instructions">
+        <li>PINCH with thumb + index to grab pieces</li>
+        <li>DRAG over the grid to choose placement</li>
+        <li>RELEASE to hard-drop at target row</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="ui-overlay">
+    <div id="left-hud-column" class="hud-panel">
+      <div class="logo-text">AR TETRIS</div>
+      <button id="restartButton" class="restart-btn" type="button">&#8635; RESTART</button>
+
+      <div id="next-pieces-panel" class="hud-panel" aria-label="Next pieces">
+        <div class="panel-title">NEXT</div>
+        <div class="piece-slot" data-slot-index="0"></div>
+        <div class="piece-slot" data-slot-index="1"></div>
+        <div class="piece-slot" data-slot-index="2"></div>
+      </div>
+
+      <div id="score-panel" class="hud-panel" aria-live="polite">
+        <div class="score-row">
+          <span class="score-label">SCORE</span>
+          <span id="scoreValue" class="score-value">000000</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label best-label">BEST</span>
+          <span id="bestScoreValue" class="best-score-value">000000</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">LEVEL</span>
+          <span id="levelValue" class="level-value">1</span>
+        </div>
+        <div class="score-row">
+          <span class="score-label">LINES</span>
+          <span id="linesValue" class="lines-value">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="input-mode-message" class="input-mode-message hidden">HAND NOT DETECTED - USING KEYBOARD</div>
+  </div>
+
+  <script type="module" src="./js/pieces.js"></script>
+  <script type="module" src="./js/grid.js"></script>
+  <script type="module" src="./js/renderer.js"></script>
+  <script type="module" src="./js/handTracker.js"></script>
+  <script type="module" src="./js/camera.js"></script>
+  <script type="module" src="./js/ui.js"></script>
+  <script type="module" src="./js/audio.js"></script>
+  <script type="module" src="./js/intro.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
